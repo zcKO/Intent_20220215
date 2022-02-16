@@ -3,6 +3,7 @@ package com.jc.intent_20220215
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -40,8 +41,31 @@ class MainActivity : AppCompatActivity() {
 //            새로운 닉네임을 받아내러 (결과를 얻으로) 가는 동작.
             startActivityForResult(myIntent, REQ_CODE_NICKNAME)      // 숫자 값으로, 닉네임을 받으러 간다고 구별하는데 사용.
 
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+//        어떤 결과든, 결과를 받아 돌아올 때 실행
+//        ex) 닉네임을 받아와도, 폰번호를 받아와도 모두 이 코드가 실행된다.
+
+//        닉네임을 받아와서 실행된게 맞는지 확인
+        if (requestCode == REQ_CODE_NICKNAME) {
+
+//            확인 버튼을 누른 것이 맞는지 확인
+            if (resultCode == RESULT_OK) {
+
+//                닉네임을 받아왔을 때, 받아온 닉네임 추출
+//                data : resultIntent 가 담겨 있다.
+                val newNickname = data?.getStringExtra("nick")
+                txtNickname.text = newNickname
+
+            }
 
         }
 
     }
+
 }
